@@ -37,7 +37,7 @@ module ZipCodeJp
             zip_codes[first_prefix] = {} unless zip_codes[first_prefix]
 
             # 例外処理
-            unless /^[0-9]+$/ === row[0] && /\d{5,}/ === row[0] && /\d{7,}/ === row[2]
+            unless /^[0-9]+$/ === row[0] || /\d{5,}/ === row[0] || /\d{7,}/ === row[2] || /^[0-9]+$/ === row[2]
               raise CSVFormatError
             end
 
