@@ -8,7 +8,7 @@ require 'yaml'
 
 module ZipCodeJp
   class Export
-    ZIP_URL  = 'http://www.post.japanpost.jp/zipcode/dl/oogaki/zip/ken_all.zip'
+    ZIP_URL  = 'http://www.post.japanpost.jp/zipcode/dl/kogaki/zip/ken_all.zip'
 
     private
     def self.to_hash(row)
@@ -35,6 +35,11 @@ module ZipCodeJp
             first_prefix  = h[:zip_code].slice(0,3)
             second_prefix = h[:zip_code].slice(3,4)
             zip_codes[first_prefix] = {} unless zip_codes[first_prefix]
+
+            # 例外処理
+            unless /^[0-9]+$/ === row[0] && /\d{5,}/ === row[0] && /\d{7,}/ === row[2]
+              raise CSVFormatError
+            end
 
             if zip_codes[first_prefix][second_prefix] && !zip_codes[first_prefix][second_prefix].instance_of?(Array)
               zip_codes[first_prefix][second_prefix] = [zip_codes[first_prefix][second_prefix]]

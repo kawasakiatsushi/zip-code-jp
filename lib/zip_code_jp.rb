@@ -1,3 +1,4 @@
+class CSVFormatError < StandardError; end
 # -*- coding: utf-8 -*-
 require 'json'
 require 'zip_code_jp/export'
